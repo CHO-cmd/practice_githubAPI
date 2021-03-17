@@ -1,0 +1,27 @@
+{
+  "name": "practice_githubapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "practice.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon practice.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CHO-cmd/practice_githubAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CHO-cmd/practice_githubAPI/issues"
+  },
+  "homepage": "https://github.com/CHO-cmd/practice_githubAPI#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
