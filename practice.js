@@ -1,30 +1,48 @@
 require("dotenv").config();
 const axios = require("axios");
 
-// https://api.github.com/graphql
-
 async function countIssues(githubID) {
   const url = "https://api.github.com/graphql";
-  // const owner = "codestates";
-  // const name = "help-desk";
 
-  let query = `query { 
-    repository (owner:"codestates", name:"help-desk") { 
+  // github uid로 조회해야하는뎅.. ㅠㅠ 일단은 id로...
+
+  let query1 = `query { 
+    repository (owner:"codestates", name:"pre-help-desk") {
       issues(filterBy: {createdBy: "${githubID}"}) {
         totalCount
       } 
     }
   }`;
 
-  let what = await axios.post(url, {
-    headers: {
-      Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+  let query2 = `query { 
+    repository (owner:"codestates", name:"help-desk") {
+      issues(filterBy: {createdBy: "${githubID}"}) {
+        totalCount
+      } 
+    }
+  }`;
+
+  let preHDIssueCount = await axios.post(url, {
+    Headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       "Content-Type": "applicaiton/json",
     },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query1 }),
   });
 
-  console.log(what);
+  let HDIssueCount = await axios.post(url, {
+    Headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      "Content-Type": "applicaiton/json",
+    },
+    body: JSON.stringify({ query2 }),
+  });
+
+  return {
+    preHelpDeskCount: preHDIssueCount,
+    helpDeskCount: HDIssueCount,
+    total: preHDIssueCount + HDIssueCount,
+  };
 }
 
 countIssues("CHO-cmd");
