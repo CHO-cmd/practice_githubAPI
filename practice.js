@@ -3,32 +3,28 @@ const axios = require("axios");
 
 // https://api.github.com/graphql
 
-async function getData() {
-  const endpoint = "https://api.github.com/graphql";
-  const query = `query { 
+async function countIssues(githubID) {
+  const url = "https://api.github.com/graphql";
+  // const owner = "codestates";
+  // const name = "help-desk";
+
+  let query = `query { 
     repository (owner:"codestates", name:"help-desk") { 
-      issues {
+      issues(filterBy: {createdBy: "${githubID}"}) {
         totalCount
-      }
+      } 
     }
   }`;
 
-  // query {
-  //   repository (owner:"codestates", name:"help-desk") {
-  //     issue {
-  //       author {
-  //         login(:"CHO-cmd")
-  //       }
-  //     }
-  //   }
-  // }
-
-  let what = await axios.get(endpoint, {
-    headers: { Authorization: `bearer ${process.env.GITHUB_TOKEN}` },
+  let what = await axios.post(url, {
+    headers: {
+      Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+      "Content-Type": "applicaiton/json",
+    },
     body: JSON.stringify({ query }),
   });
 
   console.log(what);
 }
 
-getData();
+countIssues("CHO-cmd");
