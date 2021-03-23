@@ -45,4 +45,5 @@ async function countIssues(githubID) {
   };
 }
 
+// start
 countIssues("CHO-cmd");
