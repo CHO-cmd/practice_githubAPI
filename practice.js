@@ -4,8 +4,6 @@ const axios = require("axios");
 async function countIssues(githubID) {
   const url = "https://api.github.com/graphql";
 
-  // github uid로 조회해야하는뎅.. ㅠㅠ 일단은 id로...
-
   let query1 = `query { 
     repository (owner:"codestates", name:"pre-help-desk") {
       issues(filterBy: {createdBy: "${githubID}"}) {
